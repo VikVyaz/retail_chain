@@ -1,8 +1,9 @@
-from retail_chain.apps import RetailChainConfig
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from retail_chain.views import ProductViewSet, NodeViewSet, SearchByCountryView, FactoryViewSet
-from django.urls import path
+from retail_chain.apps import RetailChainConfig
+from retail_chain.views import (FactoryViewSet, NodeViewSet, ProductViewSet,
+                                SearchByCountryView, SearchNodeByCountryView, SearchFactoryByCountryView)
 
 app_name = RetailChainConfig.name
 
@@ -14,5 +15,6 @@ router2.register(r"node", NodeViewSet, basename="node")
 router3.register(r"factory", FactoryViewSet, basename="factory")
 
 urlpatterns = [
-    path('node/search_by_country/', SearchByCountryView.as_view(), name='search_by_country')
+    path('node/search_by_country/', SearchNodeByCountryView.as_view(), name='search_node_by_country'),
+    path('factory/search_by_country/', SearchFactoryByCountryView.as_view(), name='search_factory_by_country'),
 ] + router1.urls + router2.urls + router3.urls

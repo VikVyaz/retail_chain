@@ -2,9 +2,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
 from rest_framework.exceptions import ValidationError
 
-from retail_chain.filters import NodeFilter
-from retail_chain.models import Product, SupplyChainNode, Factory
-from retail_chain.serializers import ProductSerializer, NodeSerializer, NodeUpdateSerializer, FactorySerializer
+from retail_chain.filters import FactoryFilter, NodeFilter
+from retail_chain.models import Factory, Product, SupplyChainNode
+from retail_chain.serializers import (FactorySerializer, NodeSerializer,
+                                      NodeUpdateSerializer, ProductSerializer)
 
 
 class FactoryViewSet(viewsets.ModelViewSet):
@@ -32,10 +33,19 @@ class NodeViewSet(viewsets.ModelViewSet):
         return NodeSerializer
 
 
-class SearchByCountryView(generics.ListAPIView):
+class SearchNodeByCountryView(generics.ListAPIView):
     """View для поиска по стране в SupplyChainNode"""
 
     serializer_class = NodeSerializer
     queryset = SupplyChainNode.objects.all()
     filter_backends = [DjangoFilterBackend]
     filterset_class = NodeFilter
+
+
+class SearchFactoryByCountryView(generics.ListAPIView):
+    """View для поиска по стране в Factory"""
+
+    serializer_class = FactorySerializer
+    queryset = Factory.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = FactoryFilter

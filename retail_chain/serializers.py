@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from retail_chain.models import Product, SupplyChainNode, Factory
+from retail_chain.models import Factory, Product, SupplyChainNode
 
 
 class ProductSerializer(serializers.ModelSerializer):

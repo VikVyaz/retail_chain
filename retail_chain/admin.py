@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Product, SupplyChainNode, Factory
+from .models import Factory, Product, SupplyChainNode
 
 
 @admin.register(Product)

@@ -7,16 +7,22 @@ from .models import Product, SupplyChainNode, Factory
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    """Админ-панель для Product"""
+
     list_display = ('title', 'model', 'release_date')
 
 
 @admin.action(description='Очистить задолженность')
 def clean_debt(modeladmin, request, queryset):
+    """admin-action для обнуления долга"""
+
     queryset.update(debt=0)
 
 
 @admin.register(Factory)
 class FactoryAdmin(admin.ModelAdmin):
+    """Админ-панель для Factory"""
+
     list_display = ('title', 'supply_chain_role', 'country', 'city', 'chain_level')
     list_filter = ('city',)
 
@@ -28,6 +34,8 @@ class FactoryAdmin(admin.ModelAdmin):
 
 @admin.register(SupplyChainNode)
 class NodeAdmin(admin.ModelAdmin):
+    """Админ-панель для SupplyChainNode"""
+
     list_display = ('title', 'supply_chain_role', 'country', 'city', 'supplier_link', 'chain_level')
     list_filter = ('city',)
     actions = (clean_debt,)

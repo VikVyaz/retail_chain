@@ -4,19 +4,23 @@ from retail_chain.models import Product, SupplyChainNode, Factory
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    """Сериализатор для Product"""
+
     class Meta:
         model = Product
         fields = "__all__"
 
-    def validate_produced_by(self, value):
-        if value is None:
+    def validate(self, attrs):
+        if not attrs.get('produced_by'):
             raise serializers.ValidationError(
-                {'produced_by': 'Укажите завод-изготовитель'}
+                {'produced_by': 'Такого завода-изготовителя не существует'}
             )
-        return value
+        return attrs
 
 
 class FactorySerializer(serializers.ModelSerializer):
+    """Сериализатор для Factory"""
+
     supply_chain_role = serializers.SerializerMethodField()
     chain_level = serializers.SerializerMethodField()
     produced_products = serializers.SerializerMethodField()
@@ -38,6 +42,8 @@ class FactorySerializer(serializers.ModelSerializer):
 
 
 class NodeSerializer(serializers.ModelSerializer):
+    """Сериализатор для POST/GET/DETAIL SupplyChainNode"""
+
     supplier = serializers.SerializerMethodField()
     chain_level = serializers.SerializerMethodField()
 
@@ -75,6 +81,8 @@ class NodeSerializer(serializers.ModelSerializer):
 
 
 class NodeUpdateSerializer(NodeSerializer):
+    """Сериализатор для PUT/PATCH SupplyChainNode"""
+
     class Meta:
         model = SupplyChainNode
         fields = "__all__"

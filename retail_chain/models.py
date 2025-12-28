@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Factory(models.Model):
+    """Модель для Завода"""
+
     title = models.CharField(
         max_length=50,
         verbose_name='Название звена цепи поставки',
@@ -44,6 +46,7 @@ class Factory(models.Model):
     @property
     def contacts(self):
         return {
+            'title': self.title,
             'email': self.email,
             'country': self.country,
             'city': self.city,
@@ -149,7 +152,6 @@ class SupplyChainNode(models.Model):
         max_length=50,
         verbose_name='Тип звена цепи поставок',
         help_text='Варианты:\n'
-                  'factory - завод(supplier будет отсутствовать),\n'
                   'retail_network - розничная сеть,\n'
                   'sole_proprietor - индивидуальный предприниматель.'
     )
@@ -186,6 +188,7 @@ class SupplyChainNode(models.Model):
     @property
     def contacts(self):
         return {
+            'title': self.title,
             'email': self.email,
             'country': self.country,
             'city': self.city,

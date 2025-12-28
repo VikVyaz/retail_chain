@@ -8,16 +8,22 @@ from retail_chain.serializers import ProductSerializer, NodeSerializer, NodeUpda
 
 
 class FactoryViewSet(viewsets.ModelViewSet):
+    """Вьюсет для Factory"""
+
     queryset = Factory.objects.prefetch_related('produced_products').all()
     serializer_class = FactorySerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
+    """Вьюсет для Product"""
+
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
 
 class NodeViewSet(viewsets.ModelViewSet):
+    """Вьюсет для SupplyChainNode"""
+
     queryset = SupplyChainNode.objects.all()
 
     def get_serializer_class(self):
@@ -27,6 +33,8 @@ class NodeViewSet(viewsets.ModelViewSet):
 
 
 class SearchByCountryView(generics.ListAPIView):
+    """View для поиска по стране в SupplyChainNode"""
+
     serializer_class = NodeSerializer
     queryset = SupplyChainNode.objects.all()
     filter_backends = [DjangoFilterBackend]
